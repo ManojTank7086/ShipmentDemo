@@ -76,6 +76,18 @@ namespace ShipmentModel.DBContext
             modelBuilder.Entity<UpdateShipmentStatus>(entity =>
             {
                 entity.Property(e => e.CreateDate).HasDefaultValueSql("(getdate())");
+
+                entity.HasOne(d => d.Shipment)
+                    .WithMany(p => p.UpdateShipmentStatus)
+                    .HasForeignKey(d => d.ShipmentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_UpdateShipmentStatus_ShipmentInfo");
+
+                entity.HasOne(d => d.Status)
+                    .WithMany(p => p.UpdateShipmentStatus)
+                    .HasForeignKey(d => d.StatusId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_UpdateShipmentStatus_ShipmentStatus");
             });
 
             modelBuilder.Entity<Vendor>(entity =>

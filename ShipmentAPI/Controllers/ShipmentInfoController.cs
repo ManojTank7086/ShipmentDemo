@@ -101,6 +101,21 @@ namespace ShipmentAPI.Controllers
                 scope.Complete();
                 return new OkObjectResult(result);
             }
+        } 
+        
+        // POST api/<ShipmentInfoController>        
+        [HttpPost]
+        [Route("StatusChange")]
+        public async Task<IActionResult> PostAsyncStatus([FromBody] UpdateShipmentStatusModel shipment)
+        {
+            var k = shipment.GetType().Name;
+            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                var result = await _shipmentRepository.CreateShipmentStatus(shipment);
+                scope.Complete();
+                _rabitMQProducer.SendProductMessage(result);
+                return new OkObjectResult("result");
+            }
         }
     }
 }

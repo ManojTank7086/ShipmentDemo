@@ -15,6 +15,7 @@ namespace ShipmentAPI.Repository
         {
             try
             {
+               
                 var k = new ShipmentInfo
                 {
                     AwbNo= model.AwbNo,
@@ -27,9 +28,10 @@ namespace ShipmentAPI.Repository
                     CreateBy=model.CreateBy,
                     CreateDate=DateTime.Now,
                     Item= model.Item,
-                    PktQty=model.PktQty,
-                    StatusId=model.StatusId,
+                    PktQty=model.PktQty ,
+                    StatusId= model.StatusId
                 };
+
                 using var dbcontext = _demoContext;
                 var result = await dbcontext.AddAsync(k);
                 await dbcontext.SaveChangesAsync();
@@ -41,7 +43,7 @@ namespace ShipmentAPI.Repository
             }
         }
 
-        public async Task<UpdateShipmentStatus> CreateShipmentStatus(UpdateShipmentStatus model)
+        public async Task<UpdateShipmentStatus> CreateShipmentStatus(UpdateShipmentStatusModel model)
         {
             try
             {

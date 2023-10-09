@@ -12,6 +12,6 @@ namespace ShipmentAPI.Repository
         Task <ShipmentInfo> CreateShipment(ShipmentInfoModel model);
         Task <bool> DeleteShipment(long productId);
         Task <ShipmentInfo> UpdateShipment(ShipmentInfoModel model);
-        Task <UpdateShipmentStatus> CreateShipmentStatus(UpdateShipmentStatus model);
+        Task <UpdateShipmentStatus> CreateShipmentStatus(UpdateShipmentStatusModel model);
     }
 }

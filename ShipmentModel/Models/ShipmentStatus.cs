@@ -11,6 +11,7 @@ namespace ShipmentModel.Models
         public ShipmentStatus()
         {
             ShipmentInfo = new HashSet<ShipmentInfo>();
+            UpdateShipmentStatus = new HashSet<UpdateShipmentStatus>();
         }
 
         [Key]
@@ -25,5 +26,7 @@ namespace ShipmentModel.Models
 
         [InverseProperty("Status")]
         public virtual ICollection<ShipmentInfo> ShipmentInfo { get; set; }
+        [InverseProperty("Status")]
+        public virtual ICollection<UpdateShipmentStatus> UpdateShipmentStatus { get; set; }
     }
 }

@@ -8,18 +8,23 @@ namespace ShipmentModel.Models
 {
     public partial class ShipmentInfo
     {
+        public ShipmentInfo()
+        {
+            UpdateShipmentStatus = new HashSet<UpdateShipmentStatus>();
+        }
+
         [Key]
         public long Id { get; set; }
         [Column("OriginPoint_Id")]
         public long OriginPointId { get; set; }
         [Column("DestinationPoint_Id")]
         public long DestinationPointId { get; set; }
+        [Column("Status_Id")]
+        public long StatusId { get; set; }
         [Column("Consignor_Id")]
         public long ConsignorId { get; set; }
         [Column("Consignee_Id")]
         public long ConsigneeId { get; set; }
-        [Column("Status_Id")]
-        public long StatusId { get; set; }
         [StringLength(100)]
         public string OriginAddress { get; set; }
         [StringLength(100)]
@@ -49,5 +54,7 @@ namespace ShipmentModel.Models
         [ForeignKey(nameof(StatusId))]
         [InverseProperty(nameof(ShipmentStatus.ShipmentInfo))]
         public virtual ShipmentStatus Status { get; set; }
+        [InverseProperty("Shipment")]
+        public virtual ICollection<UpdateShipmentStatus> UpdateShipmentStatus { get; set; }
     }
 }

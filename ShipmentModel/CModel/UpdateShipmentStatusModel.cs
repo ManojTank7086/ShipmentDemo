@@ -1,12 +1,15 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace ShipmentModel.Models
+namespace ShipmentModel.CModel
 {
-    public partial class UpdateShipmentStatus
+    public class UpdateShipmentStatusModel
     {
         [Key]
         public long Id { get; set; }
@@ -23,12 +26,5 @@ namespace ShipmentModel.Models
         public long CreateBy { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime CreateDate { get; set; }
-
-        [ForeignKey(nameof(ShipmentId))]
-        [InverseProperty(nameof(ShipmentInfo.UpdateShipmentStatus))]
-        public virtual ShipmentInfo Shipment { get; set; }
-        [ForeignKey(nameof(StatusId))]
-        [InverseProperty(nameof(ShipmentStatus.UpdateShipmentStatus))]
-        public virtual ShipmentStatus Status { get; set; }
     }
 }
