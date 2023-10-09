@@ -47,8 +47,20 @@ namespace ShipmentAPI.Repository
         {
             try
             {
+                var k = new UpdateShipmentStatus
+                {
+                    ShipmentId = model.ShipmentId,
+                    StatusId = model.StatusId,
+                    DriverName = model.DriverName,
+                    ContactNo1 = model.ContactNo1,
+                    ContactNo2 = model.ContactNo2,
+                    VechicalNo = model.VechicalNo,
+                    CreateBy = model.CreateBy,
+                    CreateDate = DateTime.Now,
+                };
+
                 using var dbcontext = _demoContext;
-                var result = await dbcontext.AddAsync(model);
+                var result = await dbcontext.AddAsync(k);
                 await dbcontext.SaveChangesAsync();
                 return result.Entity;
             }
