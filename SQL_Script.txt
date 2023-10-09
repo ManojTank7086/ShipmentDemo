@@ -1,0 +1,339 @@
+USE [master]
+GO
+/****** Object:  Database [Demo]    Script Date: 10/9/2023 2:04:07 PM ******/
+CREATE DATABASE [Demo]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'Demo', FILENAME = N'D:\Program Files\Microsoft SQL Server\MSSQL14.DEVMSSQLSERVER\MSSQL\DATA\Demo.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'Demo_log', FILENAME = N'D:\Program Files\Microsoft SQL Server\MSSQL14.DEVMSSQLSERVER\MSSQL\DATA\Demo_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [Demo].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [Demo] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [Demo] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [Demo] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [Demo] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [Demo] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [Demo] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [Demo] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [Demo] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [Demo] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [Demo] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [Demo] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [Demo] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [Demo] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [Demo] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [Demo] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [Demo] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [Demo] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [Demo] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [Demo] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [Demo] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [Demo] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [Demo] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [Demo] SET RECOVERY FULL 
+GO
+ALTER DATABASE [Demo] SET  MULTI_USER 
+GO
+ALTER DATABASE [Demo] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [Demo] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [Demo] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [Demo] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [Demo] SET DELAYED_DURABILITY = DISABLED 
+GO
+EXEC sys.sp_db_vardecimal_storage_format N'Demo', N'ON'
+GO
+ALTER DATABASE [Demo] SET QUERY_STORE = OFF
+GO
+USE [Demo]
+GO
+/****** Object:  Table [dbo].[AppLogs]    Script Date: 10/9/2023 2:04:08 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AppLogs](
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
+	[UserAction] [nvarchar](20) NOT NULL,
+	[EntityQuery] [nvarchar](max) NOT NULL,
+	[CreateBy] [bigint] NOT NULL,
+	[CreateDate] [datetime] NULL,
+ CONSTRAINT [PK__AppLogs__3214EC0718365B7F] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[LoginInfo]    Script Date: 10/9/2023 2:04:08 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[LoginInfo](
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
+	[UserName] [nvarchar](50) NOT NULL,
+	[UserPass] [nvarchar](50) NOT NULL,
+	[IsActive] [bit] NOT NULL,
+	[CreateBy] [bigint] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ShipmentInfo]    Script Date: 10/9/2023 2:04:08 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ShipmentInfo](
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
+	[OriginPoint_Id] [bigint] NOT NULL,
+	[DestinationPoint_Id] [bigint] NOT NULL,
+	[Status_Id] [bigint] NOT NULL,
+	[Consignor_Id] [bigint] NOT NULL,
+	[Consignee_Id] [bigint] NOT NULL,
+	[OriginAddress] [nvarchar](100) NULL,
+	[DestinationAddress] [nvarchar](100) NULL,
+	[AwbNo] [nvarchar](20) NULL,
+	[Item] [nvarchar](100) NOT NULL,
+	[PktQty] [int] NOT NULL,
+	[CreateBy] [bigint] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+ CONSTRAINT [PK__Shipment__3214EC0712A6D5D6] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ShipmentPoint]    Script Date: 10/9/2023 2:04:08 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ShipmentPoint](
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
+	[AreaName] [nvarchar](50) NOT NULL,
+	[IsActive] [bit] NOT NULL,
+	[CreateBy] [bigint] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ShipmentStatus]    Script Date: 10/9/2023 2:04:08 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ShipmentStatus](
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
+	[StatusName] [nvarchar](50) NOT NULL,
+	[IsActive] [bit] NOT NULL,
+	[CreateBy] [bigint] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[UpdateShipmentStatus]    Script Date: 10/9/2023 2:04:08 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[UpdateShipmentStatus](
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
+	[Shipment_Id] [bigint] NOT NULL,
+	[Status_Id] [bigint] NOT NULL,
+	[VechicalNo] [nvarchar](20) NULL,
+	[DriverName] [nvarchar](50) NULL,
+	[ContactNo1] [bigint] NOT NULL,
+	[ContactNo2] [bigint] NULL,
+	[CreateBy] [bigint] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+ CONSTRAINT [PK__UpdateSh__3214EC075387078F] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Vendor]    Script Date: 10/9/2023 2:04:08 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Vendor](
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
+	[VendorName] [nvarchar](50) NULL,
+	[VendorType] [nvarchar](20) NULL,
+	[CreateBy] [bigint] NULL,
+	[CreateDate] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[LoginInfo] ON 
+GO
+INSERT [dbo].[LoginInfo] ([Id], [UserName], [UserPass], [IsActive], [CreateBy], [CreateDate]) VALUES (1, N'Demo1', N'Demo@321', 1, 1, CAST(N'2023-10-07T12:15:16.810' AS DateTime))
+GO
+INSERT [dbo].[LoginInfo] ([Id], [UserName], [UserPass], [IsActive], [CreateBy], [CreateDate]) VALUES (2, N'Demo2', N'Demo@321', 1, 1, CAST(N'2023-10-07T12:15:16.810' AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[LoginInfo] OFF
+GO
+SET IDENTITY_INSERT [dbo].[ShipmentInfo] ON 
+GO
+INSERT [dbo].[ShipmentInfo] ([Id], [OriginPoint_Id], [DestinationPoint_Id], [Status_Id], [Consignor_Id], [Consignee_Id], [OriginAddress], [DestinationAddress], [AwbNo], [Item], [PktQty], [CreateBy], [CreateDate]) VALUES (4, 1, 2, 1, 2, 1, N'Kota', N'Jaipur', N'Awb123456', N'Mobile 1Pc', 1, 1, CAST(N'2023-10-08T23:19:16.500' AS DateTime))
+GO
+INSERT [dbo].[ShipmentInfo] ([Id], [OriginPoint_Id], [DestinationPoint_Id], [Status_Id], [Consignor_Id], [Consignee_Id], [OriginAddress], [DestinationAddress], [AwbNo], [Item], [PktQty], [CreateBy], [CreateDate]) VALUES (7, 1, 2, 1, 2, 1, N'Kota', N'Jaipur', N'Awb123456', N'Mobile 1Pc', 1, 1, CAST(N'2023-10-09T09:51:37.563' AS DateTime))
+GO
+INSERT [dbo].[ShipmentInfo] ([Id], [OriginPoint_Id], [DestinationPoint_Id], [Status_Id], [Consignor_Id], [Consignee_Id], [OriginAddress], [DestinationAddress], [AwbNo], [Item], [PktQty], [CreateBy], [CreateDate]) VALUES (8, 1, 2, 1, 2, 1, N'Kota 45685', N'Jaipur 45678', N'Awb123456', N'Mobile 100Pc', 1, 1, CAST(N'2023-10-09T12:57:06.857' AS DateTime))
+GO
+INSERT [dbo].[ShipmentInfo] ([Id], [OriginPoint_Id], [DestinationPoint_Id], [Status_Id], [Consignor_Id], [Consignee_Id], [OriginAddress], [DestinationAddress], [AwbNo], [Item], [PktQty], [CreateBy], [CreateDate]) VALUES (10006, 1, 2, 1, 2, 1, N'Kota 456', N'Jaipur 456', N'Awb123456', N'Mobile 100Pc', 1, 1, CAST(N'2023-10-09T12:53:42.663' AS DateTime))
+GO
+INSERT [dbo].[ShipmentInfo] ([Id], [OriginPoint_Id], [DestinationPoint_Id], [Status_Id], [Consignor_Id], [Consignee_Id], [OriginAddress], [DestinationAddress], [AwbNo], [Item], [PktQty], [CreateBy], [CreateDate]) VALUES (10007, 1, 2, 1, 2, 1, N'Kota 4564', N'Jaipur 4564', N'Awb1234563', N'Mobile 100Pc', 1, 1, CAST(N'2023-10-09T13:17:52.830' AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[ShipmentInfo] OFF
+GO
+SET IDENTITY_INSERT [dbo].[ShipmentPoint] ON 
+GO
+INSERT [dbo].[ShipmentPoint] ([Id], [AreaName], [IsActive], [CreateBy], [CreateDate]) VALUES (1, N'Kota', 1, 1, CAST(N'2023-10-07T12:16:12.533' AS DateTime))
+GO
+INSERT [dbo].[ShipmentPoint] ([Id], [AreaName], [IsActive], [CreateBy], [CreateDate]) VALUES (2, N'Jaipur', 1, 1, CAST(N'2023-10-07T12:16:12.533' AS DateTime))
+GO
+INSERT [dbo].[ShipmentPoint] ([Id], [AreaName], [IsActive], [CreateBy], [CreateDate]) VALUES (3, N'Delhi', 1, 1, CAST(N'2023-10-07T12:16:12.533' AS DateTime))
+GO
+INSERT [dbo].[ShipmentPoint] ([Id], [AreaName], [IsActive], [CreateBy], [CreateDate]) VALUES (4, N'Udaipur', 1, 1, CAST(N'2023-10-07T12:16:12.533' AS DateTime))
+GO
+INSERT [dbo].[ShipmentPoint] ([Id], [AreaName], [IsActive], [CreateBy], [CreateDate]) VALUES (5, N'Jodhpur', 1, 1, CAST(N'2023-10-07T12:16:12.533' AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[ShipmentPoint] OFF
+GO
+SET IDENTITY_INSERT [dbo].[ShipmentStatus] ON 
+GO
+INSERT [dbo].[ShipmentStatus] ([Id], [StatusName], [IsActive], [CreateBy], [CreateDate]) VALUES (1, N'Pending', 1, 1, CAST(N'2023-10-07T12:17:33.007' AS DateTime))
+GO
+INSERT [dbo].[ShipmentStatus] ([Id], [StatusName], [IsActive], [CreateBy], [CreateDate]) VALUES (2, N'In-Transit', 1, 1, CAST(N'2023-10-07T12:17:33.007' AS DateTime))
+GO
+INSERT [dbo].[ShipmentStatus] ([Id], [StatusName], [IsActive], [CreateBy], [CreateDate]) VALUES (3, N'Delivered', 1, 1, CAST(N'2023-10-07T12:17:33.007' AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[ShipmentStatus] OFF
+GO
+SET IDENTITY_INSERT [dbo].[UpdateShipmentStatus] ON 
+GO
+INSERT [dbo].[UpdateShipmentStatus] ([Id], [Shipment_Id], [Status_Id], [VechicalNo], [DriverName], [ContactNo1], [ContactNo2], [CreateBy], [CreateDate]) VALUES (1, 8, 1, N'RJ14TA1456', N'Demo', 1234567899, 1234567890, 1, CAST(N'2023-10-09T13:31:55.370' AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[UpdateShipmentStatus] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Vendor] ON 
+GO
+INSERT [dbo].[Vendor] ([Id], [VendorName], [VendorType], [CreateBy], [CreateDate]) VALUES (1, N'Vipin', N'Consignee', 1, CAST(N'2023-10-08T20:25:19.853' AS DateTime))
+GO
+INSERT [dbo].[Vendor] ([Id], [VendorName], [VendorType], [CreateBy], [CreateDate]) VALUES (2, N'Umesh', N'Consignor', 1, CAST(N'2023-10-08T20:25:36.487' AS DateTime))
+GO
+INSERT [dbo].[Vendor] ([Id], [VendorName], [VendorType], [CreateBy], [CreateDate]) VALUES (3, N'Ankit', N'Consignor', 1, CAST(N'2023-10-08T20:25:49.800' AS DateTime))
+GO
+INSERT [dbo].[Vendor] ([Id], [VendorName], [VendorType], [CreateBy], [CreateDate]) VALUES (4, N'Vikas', N'Consignee', 1, CAST(N'2023-10-08T20:26:12.107' AS DateTime))
+GO
+INSERT [dbo].[Vendor] ([Id], [VendorName], [VendorType], [CreateBy], [CreateDate]) VALUES (5, N'Kaushal', N'Consignor', 1, CAST(N'2023-10-08T20:26:52.193' AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[Vendor] OFF
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [LoginInfo_unique_user]    Script Date: 10/9/2023 2:04:08 PM ******/
+ALTER TABLE [dbo].[LoginInfo] ADD  CONSTRAINT [LoginInfo_unique_user] UNIQUE NONCLUSTERED 
+(
+	[UserName] ASC,
+	[UserPass] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[AppLogs] ADD  CONSTRAINT [DF__AppLogs__CreateD__412EB0B6]  DEFAULT (getdate()) FOR [CreateDate]
+GO
+ALTER TABLE [dbo].[LoginInfo] ADD  DEFAULT (getdate()) FOR [CreateDate]
+GO
+ALTER TABLE [dbo].[ShipmentInfo] ADD  CONSTRAINT [DF__ShipmentI__Creat__239E4DCF]  DEFAULT (getdate()) FOR [CreateDate]
+GO
+ALTER TABLE [dbo].[ShipmentPoint] ADD  DEFAULT (getdate()) FOR [CreateDate]
+GO
+ALTER TABLE [dbo].[ShipmentStatus] ADD  DEFAULT (getdate()) FOR [CreateDate]
+GO
+ALTER TABLE [dbo].[UpdateShipmentStatus] ADD  CONSTRAINT [DF__UpdateShi__Creat__48CFD27E]  DEFAULT (getdate()) FOR [CreateDate]
+GO
+ALTER TABLE [dbo].[Vendor] ADD  DEFAULT (getdate()) FOR [CreateDate]
+GO
+ALTER TABLE [dbo].[ShipmentInfo]  WITH CHECK ADD  CONSTRAINT [FK_ShipmentInfo_ShipmentPoint] FOREIGN KEY([OriginPoint_Id])
+REFERENCES [dbo].[ShipmentPoint] ([Id])
+GO
+ALTER TABLE [dbo].[ShipmentInfo] CHECK CONSTRAINT [FK_ShipmentInfo_ShipmentPoint]
+GO
+ALTER TABLE [dbo].[ShipmentInfo]  WITH CHECK ADD  CONSTRAINT [FK_ShipmentInfo_ShipmentPoint1] FOREIGN KEY([DestinationPoint_Id])
+REFERENCES [dbo].[ShipmentPoint] ([Id])
+GO
+ALTER TABLE [dbo].[ShipmentInfo] CHECK CONSTRAINT [FK_ShipmentInfo_ShipmentPoint1]
+GO
+ALTER TABLE [dbo].[ShipmentInfo]  WITH CHECK ADD  CONSTRAINT [FK_ShipmentInfo_ShipmentStatus] FOREIGN KEY([Status_Id])
+REFERENCES [dbo].[ShipmentStatus] ([Id])
+GO
+ALTER TABLE [dbo].[ShipmentInfo] CHECK CONSTRAINT [FK_ShipmentInfo_ShipmentStatus]
+GO
+ALTER TABLE [dbo].[ShipmentInfo]  WITH CHECK ADD  CONSTRAINT [FK_ShipmentInfo_Vendor] FOREIGN KEY([Consignor_Id])
+REFERENCES [dbo].[Vendor] ([Id])
+GO
+ALTER TABLE [dbo].[ShipmentInfo] CHECK CONSTRAINT [FK_ShipmentInfo_Vendor]
+GO
+ALTER TABLE [dbo].[ShipmentInfo]  WITH CHECK ADD  CONSTRAINT [FK_ShipmentInfo_Vendor1] FOREIGN KEY([Consignee_Id])
+REFERENCES [dbo].[Vendor] ([Id])
+GO
+ALTER TABLE [dbo].[ShipmentInfo] CHECK CONSTRAINT [FK_ShipmentInfo_Vendor1]
+GO
+ALTER TABLE [dbo].[UpdateShipmentStatus]  WITH CHECK ADD  CONSTRAINT [FK_UpdateShipmentStatus_ShipmentInfo] FOREIGN KEY([Shipment_Id])
+REFERENCES [dbo].[ShipmentInfo] ([Id])
+GO
+ALTER TABLE [dbo].[UpdateShipmentStatus] CHECK CONSTRAINT [FK_UpdateShipmentStatus_ShipmentInfo]
+GO
+ALTER TABLE [dbo].[UpdateShipmentStatus]  WITH CHECK ADD  CONSTRAINT [FK_UpdateShipmentStatus_ShipmentStatus] FOREIGN KEY([Status_Id])
+REFERENCES [dbo].[ShipmentStatus] ([Id])
+GO
+ALTER TABLE [dbo].[UpdateShipmentStatus] CHECK CONSTRAINT [FK_UpdateShipmentStatus_ShipmentStatus]
+GO
+USE [master]
+GO
+ALTER DATABASE [Demo] SET  READ_WRITE 
+GO
