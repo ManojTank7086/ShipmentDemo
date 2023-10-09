@@ -1,0 +1,67 @@
+﻿{
+   "CodeGenerationMode": 2,
+   "ContextClassName": "DemoContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": "DBContext",
+   "OutputPath": "Models",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "ShipmentModel",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "T4TemplatePath": null,
+   "Tables": [
+      {
+         "Name": "[dbo].[AppLogs]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[LoginInfo]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ShipmentInfo]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ShipmentPoint]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ShipmentStatus]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[UpdateShipmentStatus]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Vendor]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "jn\\devmssqlserver.Demo.dbo",
+   "UncountableWords": null,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDateOnlyTimeOnly": false,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": false,
+   "UseHandleBars": true,
+   "UseHierarchyId": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": true,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": false
+}
